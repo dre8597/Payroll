@@ -179,16 +179,14 @@ public class Employee {
     //method to calc annual salary
     public double calcAnnual()
     {
-        double pay = actualPay() * 12;
-        return pay;
+        return actualPay() * 12;
     }
 
 
     //method to calc actual pay including tax
     public double actualPay()
     {
-        double pay = monthlyPay-(monthlyPay * taxRate);
-        return pay;
+        return monthlyPay-(monthlyPay * taxRate);
     }
 
 
@@ -202,11 +200,10 @@ public class Employee {
         String printLine = System.getProperty("line.separator");
 
         //returns properties of the Employee class
-        String show = "First Name: "+firstName+printLine+"Last Name: "+lastName+
+
+        return "First Name: "+firstName+printLine+"Last Name: "+lastName+
                 printLine+"SSN: "+socialSecurityNumber
                 +printLine+"Phone: "+telephone+printLine+"Address: "+address+printLine+"Monthly Pay Rate: "+monthlyPay;
-
-        return show;
     }
 
 

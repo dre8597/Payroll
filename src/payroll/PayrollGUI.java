@@ -3,19 +3,19 @@ package payroll;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 
-
-
 //payroll GUI class extends Jframe class
-public class PayrollGUI extends javax.swing.JFrame{
+public class PayrollGUI extends javax.swing.JFrame {
     //boolean for error detection
     private Boolean error = false;
 
     //create an arraylist of type employee
     private ArrayList<Employee> employee = new ArrayList();
+
     /**
      * Creates new form PayrollGUI
      */
@@ -70,20 +70,12 @@ public class PayrollGUI extends javax.swing.JFrame{
         jLabel2.setText("Last Name");
 
         calcCurrentPayButton.setText("Calculate Current Employee Payment");
-        calcCurrentPayButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                calcCurrentPayButtonActionPerformed(evt);
-            }
-        });
+        calcCurrentPayButton.addActionListener(this::calcCurrentPayButtonActionPerformed);
 
         jLabel3.setText("Address");
 
         displayAnnualPaymentsButton.setText("Request all Annual Payments");
-        displayAnnualPaymentsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                displayAnnualPaymentsButtonActionPerformed(evt);
-            }
-        });
+        displayAnnualPaymentsButton.addActionListener(this::displayAnnualPaymentsButtonActionPerformed);
 
         addressTextBox.setColumns(20);
         addressTextBox.setRows(5);
@@ -95,13 +87,9 @@ public class PayrollGUI extends javax.swing.JFrame{
 
         jLabel6.setText("Monthly Pay");
 
-        monthlyPayrateTextBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                monthlyPayrateTextBoxActionPerformed(evt);
-            }
-        });
+        monthlyPayrateTextBox.addActionListener(this::monthlyPayrateTextBoxActionPerformed);
 
-        employeeTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Manager", "Engineer", "Technician" }));
+        employeeTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Manager", "Engineer", "Technician"}));
 
         jLabel8.setText("Employee Type");
 
@@ -111,13 +99,13 @@ public class PayrollGUI extends javax.swing.JFrame{
         jScrollPane1.setViewportView(ResultsLabel);
         jScrollPane1.setBackground(Color.RED);
 
-        jLabel10.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Lucida Grande", Font.ITALIC, 10)); // NOI18N
         jLabel10.setText("(xxxXXXxxx) omit dashes");
 
-        jLabel11.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Lucida Grande", Font.ITALIC, 10)); // NOI18N
         jLabel11.setText("(xxxXXXxxxx) omit dashes");
 
-        jLabel12.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Lucida Grande", Font.ITALIC, 10)); // NOI18N
         jLabel12.setText("(omit $)");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Technician Options"));
@@ -126,20 +114,16 @@ public class PayrollGUI extends javax.swing.JFrame{
         jLabel7.setText("Overtime Hourly Payrate ");
 
         overTimePayRateTextBox.setText("0.00");
-        overTimePayRateTextBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                overTimePayRateTextBoxActionPerformed(evt);
-            }
-        });
+        overTimePayRateTextBox.addActionListener(this::overTimePayRateTextBoxActionPerformed);
 
         jLabel9.setText("Overtime Hours");
 
-        jLabel13.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Lucida Grande", Font.ITALIC, 10)); // NOI18N
         jLabel13.setText("If no OT hours Enter 0");
 
         overtimeHoursTextBox.setText("0");
 
-        jLabel14.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Lucida Grande", Font.ITALIC, 10)); // NOI18N
         jLabel14.setText("If no OT hours Enter 0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -334,60 +318,64 @@ public class PayrollGUI extends javax.swing.JFrame{
         String overTimePayRate = overTimePayRateTextBox.getText(); // parseDouble
         String monthlyPayRate = monthlyPayrateTextBox.getText(); // parseDouble
         String overTimeHours = overtimeHoursTextBox.getText(); // parseDouble
-
+        firstNameTextBox.setBackground(Color.WHITE);
+        lastNameTextBox.setBackground(Color.WHITE);
+        socialSecurityTextBox.setBackground(Color.WHITE);
+        addressTextBox.setBackground(Color.WHITE);
+        telephoneTextBox.setBackground(Color.WHITE);
+        managerBonusCheckBox.setBackground(Color.WHITE);
+        overTimePayRateTextBox.setBackground(Color.WHITE);
+        overtimeHoursTextBox.setBackground(Color.WHITE);
 
         // The following statements check if a field was left blank in the form when the calc current pay button is clicked
         //check first name field
-        if(firstName.isEmpty())
-        {
+        if (firstName.isEmpty()) {
             this.error = true;
+            firstNameTextBox.setBackground(Color.RED);
             JOptionPane.showMessageDialog(null, "First name field is empty", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
 
         //checks last name field
-        if(lastName.isEmpty())
-        {
+        if (lastName.isEmpty()) {
             this.error = true;
+            lastNameTextBox.setBackground(Color.RED);
             JOptionPane.showMessageDialog(null, "Last name field is empty", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
 
         //checks social sec num field
-        if(social.isEmpty())
-        {
+        if (social.isEmpty()) {
             this.error = true;
+            socialSecurityTextBox.setBackground(Color.RED);
             JOptionPane.showMessageDialog(null, "Social security number field is empty", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
 
         //checks address field
-        if(address.isEmpty())
-        {
+        if (address.isEmpty()) {
             this.error = true;
+            addressTextBox.setBackground(Color.RED);
             JOptionPane.showMessageDialog(null, "Address field is empty", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
 
         //checks telephone field
-        if(telephone.isEmpty())
-        {
+        if (telephone.isEmpty()) {
             this.error = true;
+            telephoneTextBox.setBackground(Color.RED);
             JOptionPane.showMessageDialog(null, "Telephone number field is empty", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
 
 
-
         // if manager bonus box is selected and employee type is not a manager show error
-        if(managerBonusCheckBox.isSelected() && !"Manager".equals(employeeType))
-        {
+        if (managerBonusCheckBox.isSelected() && !"Manager".equals(employeeType)) {
             this.error = true;
+            managerBonusCheckBox.setBackground(Color.RED);
             JOptionPane.showMessageDialog(null, "Only a manager may have a bonus", "Error",
                     JOptionPane.ERROR_MESSAGE);     //error message
         }
-
-
 
 
         double overTime = Double.parseDouble(overTimePayRateTextBox.getText()); // parseDouble
@@ -396,80 +384,75 @@ public class PayrollGUI extends javax.swing.JFrame{
 
 
         //if manager or engineer is selected and user tries to fill in overtime error is shown
-        if(overTime>0 && oTHours>0 && !"Technician".equals(employeeType)){
+        if (overTime > 0 && oTHours > 0 && !"Technician".equals(employeeType)) {
 
             this.error = true;
+            overtimeHoursTextBox.setBackground(Color.RED);
+            overTimePayRateTextBox.setBackground(Color.RED);
             JOptionPane.showMessageDialog(null, "Only a Technician can have overtime", "Error",
                     JOptionPane.ERROR_MESSAGE);
 
         }
 
         //if there is an error the following code executes based on the error
-        if(!this.error)
-        {
+        if (!this.error) {
             //pattern matcher to make sure proper format is entered into each box
             Pattern numeric = Pattern.compile("^([0-9]+(\\\\.[0-9]+)?)+");
 
-            Boolean ssn = numeric.matcher(social).find() ? true : false; //pattern matcher ssn box and get amount
-            Boolean tele = numeric.matcher(telephone).find() ? true : false;  //pattern matcher for telephone box and get amount
-            Boolean mPayRate = numeric.matcher(monthlyPayRate).find() ? true : false; //pattern matcher for hours worked box and get amount
-            Boolean oTimePayRate = numeric.matcher(overTimePayRate).find() ? true : false; //pattern matcher for hourly pay box and get amount
-            Boolean oTimeHours = numeric.matcher(overTimeHours).find() ? true : false; // pattern matcher for overtime hours
+            Boolean ssn = numeric.matcher(social).find(); //pattern matcher ssn box and get amount
+            Boolean tele = numeric.matcher(telephone).find();  //pattern matcher for telephone box and get amount
+            Boolean mPayRate = numeric.matcher(monthlyPayRate).find(); //pattern matcher for hours worked box and get amount
+            Boolean oTimePayRate = numeric.matcher(overTimePayRate).find(); //pattern matcher for hourly pay box and get amount
+            Boolean oTimeHours = numeric.matcher(overTimeHours).find(); // pattern matcher for overtime hours
 
             //if employee type is a technician
-            if("Technician".equals(employeeType))
-            {
+            if ("Technician".equals(employeeType)) {
 
 
-
-                if(!oTimePayRate)
-                {
+                if (!oTimePayRate) {
                     this.error = true;
+                    monthlyPayrateTextBox.setBackground(Color.RED);
                     //if the amount entered in OT box is invalid show error
                     JOptionPane.showMessageDialog(null, "Over time number is not a valid number. If no overtime enter 0", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
 
-                if(!oTimeHours)
-                {
+                if (!oTimeHours) {
                     this.error = true;
+                    overtimeHoursTextBox.setBackground(Color.RED);
                     //if the amount entered in OT box is invalid show error
                     JOptionPane.showMessageDialog(null, "Over time hour number is not a valid number. If no overtime enter 0", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
 
 
-
             }
 
             //if ssn entered does not match pattern
-            if(!ssn)
-            {
+            if (!ssn) {
                 //show an error message
                 this.error = true;
+                socialSecurityTextBox.setBackground(Color.RED);
                 JOptionPane.showMessageDialog(null, "Social security number is not a valid number.", "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
 
             //if telephone entered does not match pattern
-            if(!tele)
-            {
+            if (!tele) {
                 //show an error message
                 this.error = true;
+                telephoneTextBox.setBackground(Color.RED);
                 JOptionPane.showMessageDialog(null, "Telephone number is not a valid number.", "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
         }
 
 
-
-
         // If there are not any errors, we now proceed to store results and save
-        if(!this.error)
-        {
+        if (!this.error) {
             // variables to store values from textboxes
             double mP, oTP, oTH, total, tax;
-            switch(employeeType)  //switch statement switches based on employee type selected
+            switch (Objects.requireNonNull(employeeType))  //switch statement switches based on employee type selected
             {
                 //if a technician is selected
                 case "Technician":
@@ -523,14 +506,12 @@ public class PayrollGUI extends javax.swing.JFrame{
                     m.setMonthlyPay(Double.parseDouble(monthlyPayRate));
 
                     //if the manager bonus checkbox is selected
-                    if(managerBonusCheckBox.isSelected())
-                    {
+                    if (managerBonusCheckBox.isSelected()) {
                         m.setBonusPay(0.03);  //set bonus pay amount
                     }
 
 
                     m.setTaxRate(.20);
-
 
 
                     this.employee.add(m); // add manager to employee arraylist
@@ -583,7 +564,7 @@ public class PayrollGUI extends javax.swing.JFrame{
         }
 
         //when calc button is clicked this label shows which employee we are currently viewing results for
-        resultsLabel.setText("Currently Displaying Results for: "+firstName+" "+lastName);
+        resultsLabel.setText("Currently Displaying Results for: " + firstName + " " + lastName);
 
     }//GEN-LAST:event_calcCurrentPayButtonActionPerformed
 
@@ -595,10 +576,9 @@ public class PayrollGUI extends javax.swing.JFrame{
         String list = "";
 
         //for loop goes through entire array list
-        for(int i = 0; i < this.employee.size(); i++)
-        {
+        for (Employee anEmployee : this.employee) {
             //get all items in the array list
-            list += this.employee.get(i).toString() + System.getProperty("line.separator")+ System.getProperty("line.separator");
+            list += anEmployee.toString() + System.getProperty("line.separator") + System.getProperty("line.separator");
 
 
         }
